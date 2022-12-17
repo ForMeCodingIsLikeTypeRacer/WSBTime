@@ -6,7 +6,7 @@ import threading
 # Scrape from new: Run it 30 min before the market starts, and run it until the market closes. 
 # Scrape from top day once every hour. Also scrape the comments and upvote ratio and upvote count.
 
-user_agent = "Scraper 1.0 by /u/justtrustmeplease"
+user_agent = "Scraper 1.0 by /u/Constant-Yam531"
 
 #stock_ticker_mention_count = 0
 #stock_ticker = input("What stock do you want to SCRAPE?: ")
