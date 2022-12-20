@@ -1,3 +1,4 @@
+import json
 import praw 
 from WriteToCSV import WriteToCSV
 import threading
@@ -11,10 +12,16 @@ user_agent = "Scraper 1.0 by /u/justtrustmeplease"
 #stock_ticker_mention_count = 0
 #stock_ticker = input("What stock do you want to SCRAPE?: ")
 
+credentials = 'client_secrets.json'
+
+with open(credentials) as f:
+    creds = json.load(f)
+
 reddit = praw.Reddit(
-    client_id = "TNqEttEQXgGGIZ03AE6DpA",
-    client_secret = "37Z18Netzke2pqZuejRkgfNKTsv5cQ",
-    user_agent = user_agent
+    client_id = creds['client_id'],
+    client_secret = creds['client_secret'],
+    user_agent = creds['user_agent'],
+    redirect_uri = creds['redirect_uri']
 )
 
 def newPosts(): 
