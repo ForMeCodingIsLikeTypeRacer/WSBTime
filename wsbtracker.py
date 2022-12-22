@@ -3,9 +3,7 @@ import praw
 from WriteToCSV import WriteToCSV
 import threading
 
-# IDEA: Scrape from new and scrape from top of day
-# Scrape from new: Run it 30 min before the market starts, and run it until the market closes. 
-# Scrape from top day once every hour. Also scrape the comments and upvote ratio and upvote count.
+# TODO: Scrape from top day once every hour. Also scrape the comments and upvote ratio and upvote count.
 
 user_agent = "Scraper 1.0 by /u/Constant-Yam531"
 
@@ -32,10 +30,10 @@ def newPosts():
         last_line = line
     previous_submission_title = last_line
 
-    print(previous_submission_title)
+    #print(previous_submission_title)
 
     headlines = set()
-    for submission in reddit.subreddit('wallstreetbets').new(limit=None):
+    for submission in reddit.subreddit('wallstreetbets').new(limit=1):
         #print(submission.title)
         #print(submission.id)
         #print(submission.author)
@@ -44,7 +42,7 @@ def newPosts():
         #print(submission.upvote_ratio)
         #print(submission.url)
         #break
-        print(submission.title)
+        #print(submission.title)
         headlines.add(submission.title)
 
     # Don't need this in new but do it for hot and top
@@ -54,9 +52,9 @@ def newPosts():
     #     print(comment.body)
 
     #submission_title = submission.title
-    print(submission.title)
+    #print(submission.title)
     #print(submission_title)
-
+    print(submission.title)
     PleaseWriteToCSV = WriteToCSV()
 
     #filename = 'wsbnew.csv'S
@@ -64,6 +62,28 @@ def newPosts():
     if(submission.title != previous_submission_title):
         PleaseWriteToCSV.append_to_csv(submission.title)
 
-newPosts()
+def topPosts(): 
+    threading.Timer(5.0,topPosts).start()
+    with open('wsbnew.csv', 'r') as f:
+        for line in f:
+            pass
+        last_line = line
+    previous_submission_title = last_line
+
+    headlines = set()
+    for submission in reddit.subreddit('wallstreetbets').top(limit=1):
+        headlines.add(submission.title)
+
+    print(submission.title)
+    PleaseWriteToCSV = WriteToCSV()
+
+    #filename = 'wsbnew.csv'S
+
+    if(submission.title != previous_submission_title):
+        PleaseWriteToCSV.append_to_csv(submission.title)
+    
+
+topPosts()
+# newPosts()
 
 # TO DO LATER: Go into the post and scrape the comments too. 
