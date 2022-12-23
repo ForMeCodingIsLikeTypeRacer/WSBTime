@@ -3,7 +3,7 @@ import praw
 from WriteToCSV import WriteToCSV
 import threading
 
-# TODO: Scrape from top day once every hour. Also scrape the comments and upvote ratio and upvote count.
+# TODO: Idea is to scrape all the titles and upvotes for each title and make some calculation to buy or ignore/sell a stock
 
 user_agent = "Scraper 1.0 by /u/Constant-Yam531"
 
@@ -81,9 +81,42 @@ def topPosts():
 
     if(submission.title != previous_submission_title):
         PleaseWriteToCSV.append_to_csv(submission.title)
+
+def hotPosts(): 
+    threading.Timer(5.0,hotPosts).start()
+    with open('wsbnew.csv', 'r') as f:
+        for line in f:
+            pass
+        last_line = line
+    previous_submission_title = last_line
+
+    #headlines = set()
+    headlines = {
+
+    }
+
+    count = 0
+    for submission in reddit.subreddit('wallstreetbets').hot(limit=100):
+        #headlines[submission.title] = submission.score
+        headlines[count] = [submission.title,submission.score]
+        count = count + 1
+        #headlines.add(submission.title)
+
+    #print(submission.title)
+    #print(list(headlines)[10])
+    #print(headlines)
+    PleaseWriteToCSV = WriteToCSV()
+
+    #filename = 'wsbnew.csv'S
+    print(headlines[0][1])
+    count = 0
+    while(count < 100):
+        PleaseWriteToCSV.append_to_csv(headlines[count][0])
+        count = count + 1
     
 
-topPosts()
+hotPosts()
+#topPosts()
 # newPosts()
 
 # TO DO LATER: Go into the post and scrape the comments too. 
