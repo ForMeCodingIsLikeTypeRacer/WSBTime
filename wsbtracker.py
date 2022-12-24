@@ -1,9 +1,10 @@
 import json
 import praw 
-from WriteToCSV import WriteToCSV
+from WriteToTXT import WriteToTxt
 import threading
 
 # TODO: Idea is to scrape all the titles and upvotes for each title and make some calculation to buy or ignore/sell a stock
+# TODO: change csv file to txt file
 
 user_agent = "Scraper 1.0 by /u/Constant-Yam531"
 
@@ -55,12 +56,12 @@ def newPosts():
     #print(submission.title)
     #print(submission_title)
     print(submission.title)
-    PleaseWriteToCSV = WriteToCSV()
+    PleaseWriteToTXT = WriteToTxt()
 
     #filename = 'wsbnew.csv'S
 
     if(submission.title != previous_submission_title):
-        PleaseWriteToCSV.append_to_csv(submission.title)
+        PleaseWriteToTXT.append_to_csv(submission.title)
 
 def topPosts(): 
     threading.Timer(5.0,topPosts).start()
@@ -75,7 +76,7 @@ def topPosts():
         headlines.add(submission.title)
 
     print(submission.title)
-    PleaseWriteToCSV = WriteToCSV()
+    PleaseWriteToCSV = WriteToTxt()
 
     #filename = 'wsbnew.csv'S
 
@@ -105,13 +106,13 @@ def hotPosts():
     #print(submission.title)
     #print(list(headlines)[10])
     #print(headlines)
-    PleaseWriteToCSV = WriteToCSV()
+    PleaseWriteToTXT = WriteToTxt()
 
     #filename = 'wsbnew.csv'S
     print(headlines[0][1])
     count = 0
     while(count < 100):
-        PleaseWriteToCSV.append_to_csv(headlines[count][0])
+        PleaseWriteToTXT.append_to_txt(headlines[count][0])
         count = count + 1
     
 
